@@ -120,7 +120,7 @@ class HipChat extends Adapter
           # Join all rooms
           else
             for room_jid in @options.rooms.split ","
-              joinRoom(room.jid)
+              joinRoom(room_jid)
         .fail (err) =>
           @logger.error "Can't list users: #{errmsg err}" if err
 
