@@ -100,7 +100,7 @@ class HipChat extends Adapter
 
       # Fetch user info
       connector.getRoster (users) =>
-        return init.reject err if err
+#        return init.reject err if err
         init.resolve users
 
       init
