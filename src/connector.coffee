@@ -168,9 +168,9 @@ module.exports = class Connector extends EventEmitter
       res.on 'end', () ->
         __logger.info 'hit res.on end'
         __logger.info "#{(JSON.parse data).items}"
-        json = JSON.parse data
-        __logger.info "#{util.inspect json}"
-        callback? json
+        _json = JSON.parse data
+        __logger.info "#{_json}"
+        callback? _json
 
   # Fetches the roster (buddy list)
   #
