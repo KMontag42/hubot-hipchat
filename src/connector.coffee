@@ -179,13 +179,14 @@ module.exports = class Connector extends EventEmitter
   #   - `stanza`: Full response stanza, an `xmpp.Element`
   getRoster: (callback) ->
     @logger.info "getting roster\n"
+    __logger = @logger
     @hcGetRoster (response) ->
-      @logger.info "in callback\n"
+      __logger.info "in callback\n"
       items = response.map (el) ->
         jid: "97264_#{el.id}@chat.hipchat.com"
         name: el.name
         mention_name: el.mention_name
-      @logger.info "calling back son\n"
+      __logger.info "calling back son\n"
       callback (items or [])
 
   # Updates the connector's availability and status.
