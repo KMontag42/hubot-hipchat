@@ -148,28 +148,19 @@ module.exports = class Connector extends EventEmitter
       callback err, (rooms or []), stanza
 
   hcGetRoster: (callback) ->
-    @logger.info 'in hcGetRoster'
     https = require 'https'
-    @logger.info 'required https'
     querystring = require 'querystring'
-    @logger.info 'required querystring'
 
     auth_token = process.env.HUBOT_HIPCHAT_TOKENv2
     path = "/v2/user?auth_token=#{auth_token}&include-guests=true"
 
     data = ''
-    @logger.info "setup path #{path}"
-
-    __logger = @logger
 
     https.get {host: "api.hipchat.com", path:path}, (res) ->
       res.on 'data', (chunk) ->
         data += chunk.toString()
       res.on 'end', () ->
-        __logger.info 'hit res.on end'
-        __logger.info "#{(JSON.parse data).items}"
         _json = JSON.parse data
-        __logger.info "#{_json}"
         callback? _json
 
   # Fetches the roster (buddy list)
@@ -184,6 +175,7 @@ module.exports = class Connector extends EventEmitter
     @hcGetRoster (response) ->
       __logger.info "in callback\n"
       items = response.map (el) ->
+        __logger.info "el #{util.inspect el}"
         jid: "97264_#{el.id}@chat.hipchat.com"
         name: el.name
         mention_name: el.mention_name
