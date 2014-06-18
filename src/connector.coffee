@@ -166,6 +166,7 @@ module.exports = class Connector extends EventEmitter
       res.on 'data', (chunk) ->
         data += chunk.toString()
       res.on 'end', () ->
+        __logger.info 'hit res.on end'
         json = JSON.parse data
         __logger.info "#{util.inspect json}"
         callback? json
