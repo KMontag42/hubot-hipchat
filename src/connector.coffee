@@ -172,10 +172,9 @@ module.exports = class Connector extends EventEmitter
   getRoster: (callback) ->
     @logger.info "getting roster\n"
     __logger = @logger
-    _util = util
     @hcGetRoster (response) ->
       __logger.info "in callback\n"
-      __logger.info "response #{_util.inspect response}"
+      __logger.info "response #{response.toSource()}"
       items = response.map (_el) ->
         jid: "97264_#{_el.id}@chat.hipchat.com"
         name: _el.name
