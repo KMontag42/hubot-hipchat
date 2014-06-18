@@ -164,7 +164,6 @@ module.exports = class Connector extends EventEmitter
 
     https.get {host: "api.hipchat.com", path:path}, (res) ->
       res.on 'data', (chunk) ->
-        __logger.info chunk.toString()
         data += chunk.toString()
       res.on 'end', () ->
         json = JSON.parse data
