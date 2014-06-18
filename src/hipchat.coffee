@@ -160,6 +160,8 @@ class HipChat extends Adapter
       changePresence = (PresenceMessage, user_jid, room_jid, currentName) =>
         # buffer presence events until the roster fetch completes
         # to ensure user data is properly loaded
+        @logger.info "changing presense for #{user_jid} #{currentName}"
+
         init.done =>
           user = @robot.brain.userForId(@userIdFromJid(user_jid)) or {}
           if user
