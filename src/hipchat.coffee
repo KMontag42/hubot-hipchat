@@ -99,7 +99,7 @@ class HipChat extends Adapter
           @logger.info "Not joining #{jid}"
 
       # Fetch user info
-      connector.getRoster (err, users, stanza) =>
+      connector.getRoster (users) =>
         return init.reject err if err
         init.resolve users
 

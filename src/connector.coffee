@@ -147,6 +147,22 @@ module.exports = class Connector extends EventEmitter
           is_archived: !!getChild(x, "is_archived")
       callback err, (rooms or []), stanza
 
+  hcGetRoster: (callback) ->
+    https = require 'https'
+    querystring = require 'querystring'
+
+    auth_token = process.env.HUBOT_HIPCHAT_TOKENv2
+    path = "/v2/user?auth_token=#{auth_token}&include-guests=true"
+
+    data = ''
+
+    https.get {host: "api.hipchat.com", path:path}, (res) ->
+      res.on 'data', (chunk) ->
+        data += chunk.toString()
+      res.on 'end', () ->
+        json = JSON.parse data
+        callback? json
+
   # Fetches the roster (buddy list)
   #
   # - `callback`: Function to be triggered: `function (err, items, stanza)`
@@ -154,17 +170,12 @@ module.exports = class Connector extends EventEmitter
   #   - `items`: Array of objects containing user data
   #   - `stanza`: Full response stanza, an `xmpp.Element`
   getRoster: (callback) ->
-    iq = new xmpp.Element("iq", type: "get")
-      .c("query", xmlns: "jabber:iq:roster")
-    @sendIq iq, (err, stanza) ->
-      items = if err then [] else
-        # Parse response into objects
-        stanza.getChild("query").getChildren("item").map (el) ->
-          jid: el.attrs.jid
-          name: el.attrs.name
-          # Name used to @mention this user
-          mention_name: el.attrs.mention_name
-      callback err, (items or []), stanza
+    @hcGetRoomInfo (response) ->
+      items = response.map (el) ->
+        jid: "97264_#{el.id}@chat.hipchat.com"
+        name: el.name
+        mention_name: el.mention_name
+      callback (items or [])
 
   # Updates the connector's availability and status.
   #
