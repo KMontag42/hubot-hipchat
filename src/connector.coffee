@@ -148,8 +148,11 @@ module.exports = class Connector extends EventEmitter
       callback err, (rooms or []), stanza
 
   hcGetRoster: (callback) ->
+    @logger.info 'in hcGetRoster'
     https = require 'https'
+    @logger.info 'required https'
     querystring = require 'querystring'
+    @logger.info 'required querystring'
 
     auth_token = process.env.HUBOT_HIPCHAT_TOKENv2
     path = "/v2/user?auth_token=#{auth_token}&include-guests=true"
