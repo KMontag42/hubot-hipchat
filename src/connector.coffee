@@ -174,7 +174,7 @@ module.exports = class Connector extends EventEmitter
   #   - `stanza`: Full response stanza, an `xmpp.Element`
   getRoster: (callback) ->
     @logger.info "getting roster\n"
-    @hcGetRoomInfo (response) ->
+    @hcGetRoster (response) ->
       @logger.info "in callback\n"
       items = response.map (el) ->
         jid: "97264_#{el.id}@chat.hipchat.com"
