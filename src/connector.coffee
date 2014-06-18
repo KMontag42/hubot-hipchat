@@ -174,7 +174,7 @@ module.exports = class Connector extends EventEmitter
     __logger = @logger
     @hcGetRoster (response) ->
       __logger.info "in callback\n"
-      response_inspect = JSON.stringify response
+      response_inspect = JSON.stringify response.items
       __logger.info "response #{response_inspect}"
       items = response.map (_el) ->
         jid: "97264_#{_el.id}@chat.hipchat.com"
