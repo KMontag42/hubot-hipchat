@@ -171,7 +171,6 @@ class HipChat extends Adapter
             @receive new PresenceMessage(user)
 
       connector.onEnter (user_jid, room_jid, currentName) =>
-        # TODO: log your way through this shit boiiiii
         changePresence EnterMessage, user_jid, room_jid, currentName
 
       connector.onLeave (user_jid, room_jid) ->
